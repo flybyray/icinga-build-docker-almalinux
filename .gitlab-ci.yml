@@ -1,0 +1,29 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - build
+
+variables:
+  DOCKER_REGISTRY: registry.icinga.com
+  DOCKER_IMAGE_PREFIX: ${CI_PROJECT_PATH}/
+
+before_script:
+  - docker info
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.icinga.com
+  - apk -U add make
+
+.build_job: &build_job
+  stage: build
+  tags:
+    - docker-build
+  script:
+    - make -C ${CI_JOB_NAME}
+    - '[ "$CI_COMMIT_REF_NAME" != master ] || make -C ${CI_JOB_NAME} push'
+
+'27':
+  <<: *build_job
+
+'28':
+  <<: *build_job
