@@ -9,7 +9,7 @@ RUN dnf install -y \
   sudo wget curl which tar expect git \
   patch rpm-build redhat-rpm-config rpmlint \
   patch ccache make util-linux \
-  dnf-utils rpmdevtools \
+  dnf-utils rpmdevtools createrepo \
  && dnf clean all
 
 RUN groupadd -g 1000 jenkins \
