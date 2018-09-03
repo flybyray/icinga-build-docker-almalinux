@@ -19,3 +19,7 @@ RUN groupadd -g 1000 jenkins \
 
 RUN wget -O /etc/yum.repos.d/ICINGA-release.repo \
  https://packages.icinga.com/fedora/ICINGA-release.repo
+
+RUN git clone https://git.icinga.com/build-docker/scripts.git /usr/local/bin
+ENTRYPOINT ["/usr/local/bin/icinga-build-entrypoint"]
+CMD ["icinga-build-package"]
