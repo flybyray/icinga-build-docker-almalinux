@@ -1,2 +1,2 @@
-IMAGE_SUFFIX := -x86_64
+VARIANT := x86_64
 include ../image.mk
