@@ -17,7 +17,7 @@ endif
 IMAGE := $(IMAGE_PREFIX)$(VERSION):$(VARIANT)
 
 ifeq ($(VARIANT),x86_64)
-IMAGE_EXTRA := $(IMAGE_PREFIX)$(DIST):latest
+IMAGE_EXTRA := $(IMAGE_PREFIX)$(VERSION):latest
 else
 IMAGE_EXTRA :=
 endif
