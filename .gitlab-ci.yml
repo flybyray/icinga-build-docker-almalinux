@@ -6,12 +6,12 @@ stages:
   - build
 
 variables:
-  DOCKER_REGISTRY: registry.icinga.com
+  DOCKER_REGISTRY: ${CI_REGISTRY}
   DOCKER_IMAGE_PREFIX: ${CI_PROJECT_PATH}/
 
 before_script:
   - docker info
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.icinga.com
+  - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
   - apk -U add make
 
 .build_job: &build_job
