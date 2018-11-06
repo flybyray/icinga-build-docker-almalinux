@@ -27,3 +27,6 @@ before_script:
 
 '28':
   <<: *build_job
+
+'29':
+  <<: *build_job
