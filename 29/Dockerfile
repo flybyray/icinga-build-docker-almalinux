@@ -1,6 +1,6 @@
 FROM fedora:29
 
-RUN dnf update -y
+RUN dnf update -y --setopt=install_weak_deps=False
 
 # TODO: Remove this once the build deps for boost have been cleaned up...
 RUN echo '%build_icinga_org 1' >/etc/rpm/macros.icinga_build
