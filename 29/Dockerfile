@@ -5,7 +5,7 @@ RUN dnf update -y --setopt=install_weak_deps=False
 # TODO: Remove this once the build deps for boost have been cleaned up...
 RUN echo '%build_icinga_org 1' >/etc/rpm/macros.icinga_build
 
-RUN dnf install -y \
+RUN dnf install -y --allowerasing \
   sudo wget curl which tar expect git \
   patch rpm-build redhat-rpm-config rpmlint \
   patch ccache make util-linux \
