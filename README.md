@@ -10,8 +10,6 @@ Please note:
 ## Building
 
 ```
-#export DOCKER_REGISTRY=registry.example.com/
-#export DOCKER_IMAGE_PREFIX=icinga/
 make all
 make push
 ```

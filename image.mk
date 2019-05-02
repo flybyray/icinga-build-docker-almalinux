@@ -1,25 +1,16 @@
-OS := fedora
-
-IMAGE_PREFIX := ${DOCKER_IMAGE_PREFIX}
-ifeq ($(IMAGE_PREFIX),)
-IMAGE_PREFIX := icinga/$(OS)/
+ifndef CI_REGISTRY
+CI_REGISTRY := registry.icinga.com
 endif
-
-REGISTRY := ${DOCKER_REGISTRY}
-ifneq ($(REGISTRY),)
-IMAGE_PREFIX := $(REGISTRY)/$(IMAGE_PREFIX)
+ifeq ($(CI_PROJECT_PATH),)
+CI_PROJECT_PATH := build-docker/fedora
 endif
 
 FROM := $(shell grep FROM Dockerfile | cut -d" " -f2)
-ifeq ($(VERSION),)
-VERSION := $(shell basename `pwd`)
-endif
-IMAGE := $(IMAGE_PREFIX)$(VERSION):$(VARIANT)
+VERSION := $(shell basename $$(pwd))
+IMAGE := $(CI_PROJECT_PATH)/$(VERSION)
 
-ifeq ($(VARIANT),x86_64)
-IMAGE_EXTRA := $(IMAGE_PREFIX)$(VERSION):latest
-else
-IMAGE_EXTRA :=
+ifneq ($(CI_REGISTRY),)
+IMAGE := $(CI_REGISTRY)/$(IMAGE)
 endif
 
 all: pull build
@@ -30,15 +21,9 @@ pull:
 
 build:
 	docker build --cache-from "${IMAGE}" --tag "$(IMAGE)" .
-ifneq ($(IMAGE_EXTRA),)
-	docker tag "$(IMAGE)" "$(IMAGE_EXTRA)"
-endif
 
 push:
 	docker push "$(IMAGE)"
-ifneq ($(IMAGE_EXTRA),)
-	docker push "$(IMAGE_EXTRA)"
-endif
 
 clean:
 	if (docker inspect --type image "$(IMAGE)" >/dev/null 2>&1); then docker rmi "$(IMAGE)"; fi
