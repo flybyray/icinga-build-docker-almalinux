@@ -1,5 +1,11 @@
 FROM fedora:29
 
+# Force a rebuild for rpmdb, seems broken currently as of 2019-05-02
+# sha256:8ee55e140e8751492ab2cfa4513c82093cd2716df9311ea6f442f1f1259cbb3e
+RUN rpm --rebuilddb; \
+ rm -rf /var/lib/rpm \
+ && mv /var/lib/rpmrebuilddb.* /var/lib/rpm
+
 RUN dnf update -y --setopt=install_weak_deps=False # 20190502
 
 # TODO: Remove this once the build deps for boost have been cleaned up...
