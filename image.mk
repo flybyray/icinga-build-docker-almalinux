@@ -13,6 +13,8 @@ ifneq ($(CI_REGISTRY),)
 IMAGE := $(CI_REGISTRY)/$(IMAGE)
 endif
 
+IMAGE_EXTRA_TAG := x86_64
+
 all: pull build
 
 pull:
@@ -21,9 +23,15 @@ pull:
 
 build:
 	docker build --cache-from "${IMAGE}" --tag "$(IMAGE)" .
+ifdef IMAGE_EXTRA_TAG
+	docker tag "$(IMAGE)" "$(IMAGE):$(IMAGE_EXTRA_TAG)"
+endif
 
 push:
 	docker push "$(IMAGE)"
+ifdef IMAGE_EXTRA_TAG
+	docker push "$(IMAGE):$(IMAGE_EXTRA_TAG)"
+endif
 
 clean:
 	if (docker inspect --type image "$(IMAGE)" >/dev/null 2>&1); then docker rmi "$(IMAGE)"; fi
