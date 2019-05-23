@@ -16,7 +16,10 @@ RUN dnf install -y --allowerasing \
   patch rpm-build redhat-rpm-config rpmlint \
   patch ccache make util-linux \
   dnf-utils rpmdevtools createrepo \
- && dnf clean all
+  php \
+ && dnf clean all \
+ && rm -rf /var/lib/dnf/* \
+ && rm -f /var/lib/rpm/.*.lock
 
 RUN groupadd -g 1000 jenkins \
  && useradd -u 1000 -g 1000 -m jenkins \
