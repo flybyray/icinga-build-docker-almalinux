@@ -18,7 +18,8 @@ RUN groupadd -g 1000 build \
  && echo 'build ALL=(ALL:ALL) NOPASSWD: ALL' | tee -a /etc/sudoers \
  && chown build.build /usr/local/bin
 
-USER build
 RUN git clone https://git.icinga.com/build-docker/scripts.git /usr/local/bin
+RUN icinga-provide-go
+USER build
 ENTRYPOINT ["/usr/local/bin/icinga-build-entrypoint"]
 CMD ["icinga-build-package"]
