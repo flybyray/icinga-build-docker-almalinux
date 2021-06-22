@@ -6,7 +6,7 @@ RUN dnf install -y --allowerasing \
   sudo wget curl which tar expect git \
   patch rpm-build redhat-rpm-config rpmlint \
   patch ccache make util-linux \
-  dnf-utils rpmdevtools createrepo \
+  dnf-utils rpmdevtools createrepo gcc \
  && dnf clean all
 
 RUN wget -O /etc/yum.repos.d/ICINGA-release.repo \
