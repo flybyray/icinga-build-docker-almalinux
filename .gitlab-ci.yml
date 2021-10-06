@@ -23,3 +23,6 @@ before_script:
 
 '34':
   <<: *build_job
+
+'35':
+  <<: *build_job
