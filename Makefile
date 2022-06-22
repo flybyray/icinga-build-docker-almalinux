@@ -1,11 +1,12 @@
-all:
-	$(MAKE) -C 33
-	$(MAKE) -C 34
-	$(MAKE) -C 35
-	$(MAKE) -C 36
+TARGETS := $(patsubst %/Dockerfile,%,$(wildcard */Dockerfile))
+PUSH_TARGETS := $(patsubst %,%-push,$(TARGETS))
 
-push:
-	$(MAKE) -C 33 push
-	$(MAKE) -C 34 push
-	$(MAKE) -C 35 push
-	$(MAKE) -C 36 push
+.PHONY: $(TARGETS)
+
+all: $(TARGETS)
+
+$(TARGETS):
+	$(MAKE) -C $@
+
+$(PUSH_TARGETS):
+	$(MAKE) -C $@ push
