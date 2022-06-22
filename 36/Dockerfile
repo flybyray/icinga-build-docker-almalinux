@@ -15,8 +15,7 @@ RUN wget -O /etc/yum.repos.d/ICINGA-release.repo \
 RUN groupadd -g 1000 build \
  && useradd -u 1000 -g 1000 -m build \
  && echo 'Defaults:build !requiretty' | tee -a /etc/sudoers \
- && echo 'build ALL=(ALL:ALL) NOPASSWD: ALL' | tee -a /etc/sudoers \
- && chown build.build /usr/local/bin
+ && echo 'build ALL=(ALL:ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
 
 RUN git clone https://git.icinga.com/build-docker/scripts.git /usr/local/bin
 RUN icinga-provide-go
