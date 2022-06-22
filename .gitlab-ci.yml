@@ -18,12 +18,6 @@ before_script:
     - make -C ${CI_JOB_NAME}
     - '[ "$CI_COMMIT_REF_NAME" != master ] || make -C ${CI_JOB_NAME} push'
 
-'33':
-  <<: *build_job
-
-'34':
-  <<: *build_job
-
 '35':
   <<: *build_job
 
