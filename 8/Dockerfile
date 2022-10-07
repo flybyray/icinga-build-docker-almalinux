@@ -1,8 +1,9 @@
-FROM fedora:35
+FROM almalinux:8
 
 RUN dnf update -y --setopt=install_weak_deps=False
 
-RUN dnf install -y --allowerasing \
+RUN dnf install -y epel-release; \
+  dnf install -y --allowerasing \
   sudo wget curl which tar expect git \
   patch rpm-build redhat-rpm-config rpmlint \
   patch ccache make util-linux \
