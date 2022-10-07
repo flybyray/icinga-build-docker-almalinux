@@ -1,16 +1,17 @@
 ifndef CI_REGISTRY
-CI_REGISTRY := registry.icinga.com
+CI_REGISTRY := ghcr.io
 endif
 ifeq ($(CI_PROJECT_PATH),)
-CI_PROJECT_PATH := build-docker/fedora
+CI_PROJECT_PATH := build-docker/almalinux
 endif
 
 FROM := $(shell grep FROM Dockerfile | cut -d" " -f2)
+OWNER := $(shell LC_ALL=c git remote show origin | perl -ne '/\s*fetch url:\s+(.*)/ig and print "$$1\n"' | perl -ne '/github.com.?(\b[^\/]+)/ and print $$1' )
 VERSION := $(shell basename $$(pwd))
 IMAGE := $(CI_PROJECT_PATH)/$(VERSION)
 
 ifneq ($(CI_REGISTRY),)
-IMAGE := $(CI_REGISTRY)/$(IMAGE)
+IMAGE := $(CI_REGISTRY)/$(OWNER)/$(IMAGE)
 endif
 
 IMAGE_EXTRA_TAG := x86_64
